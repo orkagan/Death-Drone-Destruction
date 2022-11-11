@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController _charC;
+    CharacterController _charC;
     bool _aiming;
     Vector3 _direction;
+    Coroutine _chargingCoroutine = null;
+    [SerializeField] int _chargeLevel;
+
     public float speed = 5;
+    public float chargeTime = 2; //seconds to wait per level of charge
 
     
     
@@ -27,24 +31,43 @@ public class PlayerMovement : MonoBehaviour
             Mathf.Round(Input.GetAxis("Horizontal")),
             0,
             Mathf.Round(Input.GetAxis("Vertical"))
-            ).normalized;
+            );
 
-        //when not aiming
+        //move when not aiming
         if (!_aiming)
         {
             //move player
-            _charC.Move(_direction * speed * Time.deltaTime);
+            _charC.Move(_direction.normalized * speed * Time.deltaTime);
         }
-        else
+
+        //do aiming gun stuff
+        if (Input.GetButtonDown("Fire1")||Input.GetKeyDown(KeyCode.R))
         {
-            //do aiming gun stuff
+            _aiming = true;
+            _chargeLevel = 1;
+            _chargingCoroutine = StartCoroutine(ChargingShot());
+        }
+        if (Input.GetButtonUp("Fire1")||Input.GetKeyUp(KeyCode.R))
+        {
+            _aiming = false;
+            //firing the shot logic
+            _chargeLevel = 0;
+            StopCoroutine(_chargingCoroutine);
         }
 
         //jank if statement to stop it from resetting rotation when not moving
-        if(_charC.velocity.magnitude >= speed)
+        if(_direction.magnitude>0.4f)
         {
             //rotate the character to face movement direction
             transform.rotation = Quaternion.LookRotation(_direction);
+        }
+    }
+    IEnumerator ChargingShot()
+    {
+        while (_aiming)
+        {
+            yield return new WaitForSeconds(chargeTime);
+            if (_chargeLevel < 3) _chargeLevel++;
         }
     }
 }
