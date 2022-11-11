@@ -11,6 +11,8 @@ public class EnemySpawner : MonoBehaviour
     float nextSpawn = 0.0f;
     public GameObject Camera;
 
+    public int _enemyCount = 0;
+
 
 
     void Update()
@@ -27,6 +29,7 @@ public class EnemySpawner : MonoBehaviour
         
         if (Time.time > nextSpawn)
         {
+            _enemyCount++;
             nextSpawn = Time.time + spawnRate;
             randX = Random.Range(-36f, 62);
             whereToSpawn = new Vector2(randX, transform.position.y);
@@ -35,11 +38,13 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "SpawnRestriction")
-        {
-            Destroy(_mob);
-        }
-    }
+
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.tag == "SpawnRestriction")
+    //    {
+    //        Destroy(_mob);
+    //    }
+    //}
 }

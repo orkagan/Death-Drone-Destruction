@@ -354,7 +354,7 @@ Transform:
   m_Children:
   - {fileID: 86176295}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &873113304
 GameObject:
@@ -715,7 +715,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mob: {fileID: 86176294}
   spawnRate: 2
-  Camera: {fileID: 0}
+  Camera: {fileID: 963194225}
+  _enemyCount: 0
 --- !u!4 &1007769207
 Transform:
   m_ObjectHideFlags: 0
@@ -729,7 +730,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1122295548
 GameObject:
@@ -5973,5 +5974,9 @@ PrefabInstance:
       propertyPath: _playerlocation
       value: 
       objectReference: {fileID: 1729157330}
+    - target: {fileID: 3896464562762134718, guid: fb4ae59cf82e0d14aa9c080d7163913c, type: 3}
+      propertyPath: _enemySpawnerObj
+      value: 
+      objectReference: {fileID: 1007769205}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb4ae59cf82e0d14aa9c080d7163913c, type: 3}
