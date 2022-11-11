@@ -45,14 +45,15 @@ public class PlayerMovement : MonoBehaviour
         {
             _aiming = true;
             _chargeLevel = 1;
+            if(_chargingCoroutine!=null) StopCoroutine(_chargingCoroutine);
             _chargingCoroutine = StartCoroutine(ChargingShot());
         }
         if (Input.GetButtonUp("Fire1")||Input.GetKeyUp(KeyCode.R))
         {
             _aiming = false;
             //firing the shot logic
-            _chargeLevel = 0;
             StopCoroutine(_chargingCoroutine);
+            _chargeLevel = 0;
         }
 
         //jank if statement to stop it from resetting rotation when not moving
