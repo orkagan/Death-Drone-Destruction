@@ -18,7 +18,8 @@ public class EnemySpawner : MonoBehaviour
         SpawnEnemies();
     }
 
-
+    // Need to fix spawning in viewport.
+    // Add enemy cap count so spawning has a limit.
     
 
     void SpawnEnemies()
