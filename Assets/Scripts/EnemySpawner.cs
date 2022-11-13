@@ -13,7 +13,30 @@ public class EnemySpawner : MonoBehaviour
 
     public int _enemyCount = 0;
 
-
+    ///Singleton Setup
+    //Staticly typed property setup for EnemySpawner.Instance
+    private static EnemySpawner _instance;
+    public static EnemySpawner Instance
+    {
+        get => _instance;
+        private set
+        {
+            //check if instance of this class already exists and if so keep orignal existing instance
+            if (_instance == null)
+            {
+                _instance = value;
+            }
+            else if (_instance != value)
+            {
+                Debug.Log($"{nameof(EnemySpawner)} instance already exists, destroy the duplicate!");
+                Destroy(value);
+            }
+        }
+    }
+    private void Awake()
+    {
+        Instance = this; //sets the static class instance
+    }
 
     void Update()
     {

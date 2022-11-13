@@ -7,14 +7,8 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] Transform _playerlocation;
     [SerializeField] float _speed;
     [SerializeField] float _closeToPlayer;
-    [SerializeField] GameObject _enemySpawnerObj;
     float _dist;
 
-    EnemySpawner _enemySpawner;
-    private void Start()
-    {
-        _enemySpawner = _enemySpawnerObj.GetComponent<EnemySpawner>();
-    }
     private void Update()
     {
         ChasePlayer();
@@ -37,7 +31,7 @@ public class EnemyMovement : MonoBehaviour
     //This function lowers enemy count when an enemy is destroyed.
     private void OnDestroy()
     {
-        _enemySpawner._enemyCount--;
+        EnemySpawner.Instance._enemyCount--;
     }
 
 
