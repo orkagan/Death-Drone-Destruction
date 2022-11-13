@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] GameObject _mob;
     float randX;
     Vector2 whereToSpawn;
-    public float spawnRate = 2f;
+    public float spawnRate = 0.1f;
     float nextSpawn = 0.0f;
     public GameObject Camera;
 
@@ -43,14 +43,13 @@ public class EnemySpawner : MonoBehaviour
         SpawnEnemies();
     }
 
-    // Need to fix spawning in viewport.
-    // Add enemy cap count so spawning has a limit.
+    // Need to fix spawning in viewport
     
 
     void SpawnEnemies()
     {
         
-        if (Time.time > nextSpawn)
+        if (Time.time > nextSpawn && _enemyCount <=49)
         {
             _enemyCount++;
             nextSpawn = Time.time + spawnRate;
