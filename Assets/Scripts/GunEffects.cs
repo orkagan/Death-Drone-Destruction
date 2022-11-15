@@ -11,6 +11,7 @@ public class GunEffects : MonoBehaviour
     void Start()
     {
         _parsys= GetComponent<ParticleSystem>();
+        
     }
 
     // Update is called once per frame
