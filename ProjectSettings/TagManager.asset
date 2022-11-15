@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy1
   - SpawnRestriction
+  - Enemy2
   layers:
   - Default
   - TransparentFX
