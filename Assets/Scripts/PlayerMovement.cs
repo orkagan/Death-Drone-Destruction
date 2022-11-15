@@ -14,12 +14,12 @@ public class PlayerMovement : MonoBehaviour
     public float chargeTime = 2; //seconds to wait per level of charge
 
     
-    
     // Start is called before the first frame update
     void Start()
     {
         _charC = GetComponent<CharacterController>();
         _aiming = false;
+
     }
 
     // Update is called once per frame
@@ -71,4 +71,5 @@ public class PlayerMovement : MonoBehaviour
             if (_chargeLevel < 3) _chargeLevel++;
         }
     }
+
 }
