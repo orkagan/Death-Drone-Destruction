@@ -7,6 +7,7 @@ TagManager:
   - Enemy1
   - SpawnRestriction
   - Enemy2
+  - Beam
   layers:
   - Default
   - TransparentFX
