@@ -2,22 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
     CharacterController _charC;
     bool _aiming;
     Vector3 _direction;
     Coroutine _chargingCoroutine = null;
+    Animator _anim;
     [SerializeField] int _chargeLevel;
 
     public float speed = 5;
-    public float chargeTime = 2; //seconds to wait per level of charge
+    public float chargeTime = 1; //seconds to wait per level of charge
 
     
     // Start is called before the first frame update
     void Start()
     {
         _charC = GetComponent<CharacterController>();
+        _anim = GetComponent<Animator>();
         _aiming = false;
 
     }
@@ -56,12 +59,16 @@ public class PlayerMovement : MonoBehaviour
             _chargeLevel = 0;
         }
 
-        //jank if statement to stop it from resetting rotation when not moving
+        //check to stop it from resetting rotation when not moving
         if(_direction.magnitude>0.4f)
         {
             //rotate the character to face movement direction
             transform.rotation = Quaternion.LookRotation(_direction);
         }
+
+        //setting anim parameters
+        _anim.SetBool("isAiming", _aiming);
+        _anim.SetFloat("moveSpeed", _charC.velocity.magnitude);
     }
     IEnumerator ChargingShot()
     {

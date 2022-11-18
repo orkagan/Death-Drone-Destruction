@@ -13,7 +13,7 @@ public class EnemySpawner : MonoBehaviour
 
     public int _enemyCount = 0;
 
-    ///Singleton Setup
+    #region Singleton Setup
     //Staticly typed property setup for EnemySpawner.Instance
     private static EnemySpawner _instance;
     public static EnemySpawner Instance
@@ -37,6 +37,7 @@ public class EnemySpawner : MonoBehaviour
     {
         Instance = this; //sets the static class instance
     }
+    #endregion
 
     void Update()
     {
@@ -55,9 +56,8 @@ public class EnemySpawner : MonoBehaviour
             nextSpawn = Time.time + spawnRate;
             randX = Random.Range(-36f, 62);
             whereToSpawn = new Vector2(randX, transform.position.y);
-            Instantiate(_mob, whereToSpawn, Quaternion.identity);
+            Instantiate(_mob, whereToSpawn, Quaternion.identity, transform); //spawns enemies as children
         }
-
     }
 
 

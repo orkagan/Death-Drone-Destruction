@@ -9,6 +9,10 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] float _closeToPlayer;
     float _dist;
 
+    private void Start()
+    {
+        _playerlocation = GameObject.FindGameObjectWithTag("Player").transform;
+    }
     private void Update()
     {
         ChasePlayer();
