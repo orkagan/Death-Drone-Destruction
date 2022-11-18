@@ -10,11 +10,14 @@ public class GunShoot : MonoBehaviour
     void Start()
     {
         bCollider= GetComponent<BoxCollider>();
-        BoxCollider bc = gameObject.AddComponent(typeof(BoxCollider)) as BoxCollider;
-        bc.enabled = false;
-        bc.isTrigger= true;
-        bc.size = beamSize;
-        bc.center = new Vector3(0, 0, beamSize.z/2);
+        if (bCollider == null)
+        {
+            bCollider = gameObject.AddComponent(typeof(BoxCollider)) as BoxCollider;
+        }
+        bCollider.enabled = false;
+        bCollider.isTrigger= true;
+        bCollider.size = beamSize;
+        bCollider.center = new Vector3(0, 0, beamSize.z/2);
         //sets centre like this to make it so that when changing the size, z axis extends out from centre
     }
 
@@ -30,9 +33,11 @@ public class GunShoot : MonoBehaviour
 
 
 
-    void SingleChargeShot()
+    public void SingleChargeShot()
     {
+        Debug.Log("Pew!");
         bCollider.enabled = true;
+        GetComponentInChildren<RedHollowControl>().Play_Charging(); //just the beam visual
         StartCoroutine(disableWithDelay());
     }
 
@@ -40,6 +45,8 @@ public class GunShoot : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         bCollider.enabled = false;
+        GetComponentInChildren<RedHollowControl>().Dead(); //play end of beam visual
+        Debug.Log("Unpew.");
     }
 
 }

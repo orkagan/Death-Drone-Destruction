@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
+    public GameObject beamPrefab;
+    
     CharacterController _charC;
     bool _aiming;
     Vector3 _direction;
@@ -50,13 +52,16 @@ public class PlayerMovement : MonoBehaviour
             _chargeLevel = 1;
             if(_chargingCoroutine!=null) StopCoroutine(_chargingCoroutine);
             _chargingCoroutine = StartCoroutine(ChargingShot());
+            GetComponentInChildren<RedHollowControl>().Play_Charging(); //just the beam visual
         }
         if (Input.GetButtonUp("Fire1")||Input.GetKeyUp(KeyCode.R))
         {
             _aiming = false;
-            //firing the shot logic
+            //firing the shot code to go here
             StopCoroutine(_chargingCoroutine);
             _chargeLevel = 0;
+            GetComponentInChildren<RedHollowControl>().Dead(); //end the beam visual
+            GetComponentInChildren<GunShoot>().SingleChargeShot(); //jank placeholder shooting
         }
 
         //check to stop it from resetting rotation when not moving
@@ -76,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
         {
             yield return new WaitForSeconds(chargeTime);
             if (_chargeLevel < 3) _chargeLevel++;
+            else GetComponentInChildren<RedHollowControl>().Finish_Charging(); //final charge stage visual
         }
     }
 

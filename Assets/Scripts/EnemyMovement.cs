@@ -37,6 +37,13 @@ public class EnemyMovement : MonoBehaviour
     {
         EnemySpawner.Instance._enemyCount--;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Beam"))
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
 
