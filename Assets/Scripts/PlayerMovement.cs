@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5;
     public float chargeTime = 1; //seconds to wait per level of charge
 
+    HealthBar healthBar;
+
     
     // Start is called before the first frame update
     void Start()
@@ -24,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         _charC = GetComponent<CharacterController>();
         _anim = GetComponent<Animator>();
         _aiming = false;
-
+        healthBar= FindObjectOfType<HealthBar>();
     }
 
     // Update is called once per frame
@@ -38,8 +40,9 @@ public class PlayerMovement : MonoBehaviour
             Mathf.Round(Input.GetAxis("Vertical"))
             );
 
-        //move when not aiming
-        if (!_aiming)
+
+            //move when not aiming
+            if (!_aiming)
         {
             //move player
             _charC.Move(_direction.normalized * speed * Time.deltaTime);
@@ -84,5 +87,18 @@ public class PlayerMovement : MonoBehaviour
             else GetComponentInChildren<RedHollowControl>().Finish_Charging(); //final charge stage visual
         }
     }
+
+
+    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            StartCoroutine(healthBar.LoseHealth());
+        }
+    }
+
+    
 
 }
