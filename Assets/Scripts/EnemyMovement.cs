@@ -8,10 +8,12 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] float _speed;
     [SerializeField] float _closeToPlayer;
     float _dist;
+    int mobValue = 5;
 
     private void Start()
     {
         _playerlocation = GameObject.FindGameObjectWithTag("Player").transform;
+        
     }
     private void Update()
     {
@@ -36,6 +38,9 @@ public class EnemyMovement : MonoBehaviour
     private void OnDestroy()
     {
         EnemySpawner.Instance._enemyCount--;
+        HighScoreData.Instance.score += mobValue;
+        
+
     }
     private void OnTriggerEnter(Collider other)
     {

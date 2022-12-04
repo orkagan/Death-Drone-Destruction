@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: f3eea28eecaddf54d8ce209e1d009c6b
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Neon Rave
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 3e7828ace209b72408677825d9464d4c, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

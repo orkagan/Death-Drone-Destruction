@@ -15,6 +15,7 @@ public class FastEnemy : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _playerlocation = GameObject.FindGameObjectWithTag("Player").transform;
     }
     private void Update()
     {
@@ -41,5 +42,12 @@ public class FastEnemy : MonoBehaviour
         EnemySpawner.Instance._enemyCount--;
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Beam"))
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }
