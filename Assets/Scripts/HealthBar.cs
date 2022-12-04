@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class HealthBar : MonoBehaviour
 {
@@ -11,7 +12,17 @@ public class HealthBar : MonoBehaviour
     public Image healthBarGO;
     public GameObject lossPanel;
     PlayerMovement playerMovement;
+    GameObject playAgain;
+    GameObject mainMenu;
 
+    private void OnEnable()
+    {
+        {
+            EventSystem.current.SetSelectedGameObject(playAgain);
+            EventSystem.current.SetSelectedGameObject(mainMenu);
+
+        }
+    }
 
 
     private void Start()
@@ -69,13 +80,21 @@ public class HealthBar : MonoBehaviour
         {
             healthBarGO.fillAmount = 0f;
             ChangePanel();
-            yield return new WaitForSeconds(1);
-            SceneManager.LoadScene(0);
+            
 
         }
         yield break;
     }
 
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 
     void ChangePanel()
     {
