@@ -13,7 +13,7 @@ public class EndGame : MonoBehaviour
     {
         {
             EventSystem.current.SetSelectedGameObject(playAgain);
-            EventSystem.current.SetSelectedGameObject(mainMenu);
+            
 
         }
     }
