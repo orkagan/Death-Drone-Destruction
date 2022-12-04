@@ -17,6 +17,11 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5;
     public float chargeTime = 1; //seconds to wait per level of charge
 
+    public bool fullHealth = true;
+    public bool threeQuarterHealth = false;
+    public bool halfHealth = false;
+    public bool quarterHealth = false;
+
     HealthBar healthBar;
 
     
@@ -27,7 +32,11 @@ public class PlayerMovement : MonoBehaviour
         _anim = GetComponent<Animator>();
         _aiming = false;
         healthBar= FindObjectOfType<HealthBar>();
-    }
+        fullHealth = true;
+        threeQuarterHealth = false;
+        halfHealth = false;
+        quarterHealth = false;
+}
 
     // Update is called once per frame
     void Update()
@@ -95,8 +104,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            StartCoroutine(healthBar.LoseHealth());
+            Debug.Log("Collision");
+            healthBar.LoseHealth();
         }
+
     }
 
     

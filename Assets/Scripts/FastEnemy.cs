@@ -8,6 +8,7 @@ public class FastEnemy : MonoBehaviour
     [SerializeField] float _speed;
     [SerializeField] float _closeToPlayer;
     float _dist;
+    int mobValue = 10;
 
     Rigidbody _rb;
 
@@ -40,6 +41,7 @@ public class FastEnemy : MonoBehaviour
     private void OnDestroy()
     {
         EnemySpawner.Instance._enemyCount--;
+        HighScoreData.Instance.score += mobValue;
     }
 
     private void OnTriggerEnter(Collider other)
