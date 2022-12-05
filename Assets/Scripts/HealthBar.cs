@@ -11,13 +11,15 @@ public class HealthBar : MonoBehaviour
 
     public Image healthBarGO;
     PlayerMovement playerMovement;
+    public GameObject shield;
    
 
 
     private void Start()
     {
         HealthBarInitial();
-        playerMovement = FindObjectOfType<PlayerMovement>();    
+        playerMovement = FindObjectOfType<PlayerMovement>();
+        shield.SetActive(false);
 
     }
 
@@ -42,26 +44,32 @@ public class HealthBar : MonoBehaviour
         if (playerMovement.fullHealth)
         {
             healthBarGO.fillAmount= 0.75f;
+            shield.SetActive(true);
             yield return new WaitForSeconds(1);
             playerMovement.fullHealth= false;
             yield return new WaitForSeconds(1);
+            shield.SetActive(false);
             playerMovement.threeQuarterHealth = true; 
         }
         else if (playerMovement.threeQuarterHealth)
         {
+            shield.SetActive(true);
             healthBarGO.fillAmount = 0.50f;
             yield return new WaitForSeconds(1);
             playerMovement.threeQuarterHealth = false;
             yield return new WaitForSeconds(1);
+            shield.SetActive(false);
             playerMovement.halfHealth = true;
 
         }
         else if (playerMovement.halfHealth)
         {
+            shield.SetActive(true);
             healthBarGO.fillAmount = 0.25f;
             yield return new WaitForSeconds(1);
             playerMovement.halfHealth = false;
             yield return new WaitForSeconds(1);
+            shield.SetActive(false);
             playerMovement.quarterHealth = true;
 
         }
