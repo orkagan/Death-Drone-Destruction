@@ -2,21 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FastEnemy : MonoBehaviour
+public class WalkerMovement : MonoBehaviour
 {
     [SerializeField] Transform _playerlocation;
     [SerializeField] float _speed;
     [SerializeField] float _closeToPlayer;
     float _dist;
-    int mobValue = 20;
-
-    Rigidbody _rb;
-
+    int mobValue = 10;
 
     private void Start()
     {
-        _rb = GetComponent<Rigidbody>();
         _playerlocation = GameObject.FindGameObjectWithTag("Player").transform;
+
     }
     private void Update()
     {
@@ -32,7 +29,7 @@ public class FastEnemy : MonoBehaviour
             //Look at player, and move forward.
             Debug.Log("Chasing Player");
             transform.LookAt(_playerlocation);
-            _rb.AddForce(transform.forward * _speed);
+            transform.position += transform.forward * _speed * Time.deltaTime;
         }
 
     }
@@ -42,8 +39,9 @@ public class FastEnemy : MonoBehaviour
     {
         EnemySpawner.Instance._enemyCount--;
         HighScoreData.Instance.score += mobValue;
-    }
 
+
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Beam"))
@@ -51,5 +49,4 @@ public class FastEnemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }
