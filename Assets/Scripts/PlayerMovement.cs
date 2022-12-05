@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     public bool halfHealth = false;
     public bool quarterHealth = false;
 
+
+    SFXHandler sfxHandler;
     HealthBar healthBar;
 
     
@@ -31,11 +33,14 @@ public class PlayerMovement : MonoBehaviour
         _charC = GetComponent<CharacterController>();
         _anim = GetComponent<Animator>();
         _aiming = false;
+
         healthBar= FindObjectOfType<HealthBar>();
         fullHealth = true;
         threeQuarterHealth = false;
         halfHealth = false;
         quarterHealth = false;
+
+        sfxHandler = FindObjectOfType<SFXHandler>();
 }
 
     // Update is called once per frame
@@ -65,6 +70,9 @@ public class PlayerMovement : MonoBehaviour
             if(_chargingCoroutine!=null) StopCoroutine(_chargingCoroutine);
             _chargingCoroutine = StartCoroutine(ChargingShot());
             GetComponentInChildren<RedHollowControl>().Play_Charging(); //just the beam visual
+            
+            sfxHandler.ChargeGun(); // Starts gun charge audio clip
+
         }
         if (Input.GetButtonUp("Fire1")||Input.GetKeyUp(KeyCode.R))
         {
@@ -74,6 +82,9 @@ public class PlayerMovement : MonoBehaviour
             _chargeLevel = 0;
             GetComponentInChildren<RedHollowControl>().Dead(); //end the beam visual
             GetComponentInChildren<GunShoot>().SingleChargeShot(); //jank placeholder shooting
+            
+            sfxHandler.UnchargeGun(); // Stops gun Charge Audio Clip
+            
         }
 
         //check to stop it from resetting rotation when not moving

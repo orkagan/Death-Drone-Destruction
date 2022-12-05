@@ -7,6 +7,8 @@ public class GunShoot : MonoBehaviour
     BoxCollider bCollider;
     [SerializeField] Vector3 beamSize = new Vector3(3,7,25);
 
+    SFXHandler sfxHandler;
+
     void Start()
     {
         bCollider= GetComponent<BoxCollider>();
@@ -19,6 +21,8 @@ public class GunShoot : MonoBehaviour
         bCollider.size = beamSize;
         bCollider.center = new Vector3(0, 0, beamSize.z/2);
         //sets centre like this to make it so that when changing the size, z axis extends out from centre
+
+        sfxHandler = FindObjectOfType<SFXHandler>();
     }
 
     // Update is called once per frame
@@ -39,6 +43,9 @@ public class GunShoot : MonoBehaviour
         bCollider.enabled = true;
         GetComponentInChildren<RedHollowControl>().Play_Charging(); //just the beam visual
         StartCoroutine(disableWithDelay());
+
+        sfxHandler.ShootTier1();// Shoots the first tier sound after charging effect.
+        
     }
 
     IEnumerator disableWithDelay()
