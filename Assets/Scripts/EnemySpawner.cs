@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
     float randX;
     Vector2 whereToSpawn;
     public float spawnRate = 0.1f;
+    public int spawnLimit = 64;
     float nextSpawn = 0.0f;
     public GameObject Camera;
 
@@ -55,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
     void SpawnEnemies()
     {
         
-        if (Time.time > nextSpawn && _enemyCount <=49)
+        if (Time.time > nextSpawn && _enemyCount <= spawnLimit)
         {
             _enemyCount++;
             nextSpawn = Time.time + spawnRate;
