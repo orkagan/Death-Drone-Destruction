@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] GameObject _mob;
+    [SerializeField] GameObject _player;
     float randX;
     Vector2 whereToSpawn;
     public float spawnRate = 0.1f;
@@ -39,6 +40,10 @@ public class EnemySpawner : MonoBehaviour
     }
     #endregion
 
+    void Start()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player");
+    }
     void Update()
     {
         SpawnEnemies();

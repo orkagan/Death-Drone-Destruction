@@ -28,7 +28,7 @@ public class GunShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             SingleChargeShot();
         }   
@@ -41,9 +41,8 @@ public class GunShoot : MonoBehaviour
     {
         Debug.Log("Pew!");
         bCollider.enabled = true;
-        GetComponentInChildren<RedHollowControl>().Play_Charging(); //just the beam visual
         StartCoroutine(disableWithDelay());
-
+        GetComponentInChildren<RedHollowControl>().Dead(); //beam firing visual
         sfxHandler.ShootTier1();// Shoots the first tier sound after charging effect.
         
     }
@@ -52,7 +51,6 @@ public class GunShoot : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         bCollider.enabled = false;
-        GetComponentInChildren<RedHollowControl>().Dead(); //play end of beam visual
         Debug.Log("Unpew.");
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SFXHandler : MonoBehaviour
 {
+    public GameObject player;
     public AudioClip gunCharge;
     public AudioClip tier1;
     public AudioClip tier2;
@@ -15,33 +16,42 @@ public class SFXHandler : MonoBehaviour
     AudioSource AS;
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         AS = GetComponent<AudioSource>();
     }
 
     public void ChargeGun()
     {
-        AudioSource.PlayClipAtPoint(gunCharge, transform.position);
+        AudioSource.PlayClipAtPoint(gunCharge, player.transform.position);
     }
 
     public void UnchargeGun()
     {
         Debug.Log("Uncharge");
-        GameObject.Find("One shot audio").GetComponent<AudioSource>().Stop();
+        //GameObject.Find("One shot audio").GetComponent<AudioSource>().Stop();
+        //finds all game objects with AudioSource and if the sound used is gunCharge then stop them
+        foreach (AudioSource audioSrc in GameObject.FindObjectsOfType<AudioSource>())
+        {
+            if (audioSrc.clip.name == gunCharge.name)
+            {
+                Destroy(audioSrc.gameObject);
+            }
+        }
     }
 
     public void ShootTier1()
     {
-        AudioSource.PlayClipAtPoint(tier1, transform.position);
+        AudioSource.PlayClipAtPoint(tier1, player.transform.position);
     }
 
     public void ShootTier2()
     {
-        AudioSource.PlayClipAtPoint(tier2, transform.position);
+        AudioSource.PlayClipAtPoint(tier2, player.transform.position);
     }
 
     public void ShootTier3()
     {
-        AudioSource.PlayClipAtPoint(tier3, transform.position);
+        AudioSource.PlayClipAtPoint(tier3, player.transform.position);
     }
 
 }

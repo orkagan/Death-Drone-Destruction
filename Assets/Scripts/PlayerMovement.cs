@@ -9,13 +9,16 @@ public class PlayerMovement : MonoBehaviour
     
     CharacterController _charC;
     bool _aiming;
+    bool _onCoolDown;
     Vector3 _direction;
     Coroutine _chargingCoroutine = null;
     Animator _anim;
     [SerializeField] int _chargeLevel;
 
-    public float speed = 5;
+    public float speed = 5f;
+    public float gravity = 8f;
     public float chargeTime = 1; //seconds to wait per level of charge
+    public float coolDown = 1f; //seconds to wait to fire another shot
 
     public bool fullHealth = true;
     public bool threeQuarterHealth = false;
@@ -33,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         _charC = GetComponent<CharacterController>();
         _anim = GetComponent<Animator>();
         _aiming = false;
+        _onCoolDown = false;
 
         healthBar= FindObjectOfType<HealthBar>();
         fullHealth = true;
@@ -46,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        #region Movement
         //calculates a Vector3 for the direction based on input
         //Input.GetAxis is rounded to nearest integer to make it so there are only 8 directions
         _direction = new Vector3(
@@ -55,15 +60,31 @@ public class PlayerMovement : MonoBehaviour
             );
 
 
-            //move when not aiming
-            if (!_aiming)
+        //move when not aiming
+        if (!_aiming)
         {
             //move player
             _charC.Move(_direction.normalized * speed * Time.deltaTime);
         }
+        //setting anim parameters
+        _anim.SetFloat("moveSpeed", _charC.velocity.magnitude);
+
+        //check to stop it from resetting rotation when not moving
+        if(_direction.magnitude>0.4f)
+        {
+            //rotate the character to face movement direction
+            transform.rotation = Quaternion.LookRotation(_direction);
+        }
+
+        //gravity
+        if (!_charC.isGrounded)
+        {
+            _charC.Move(new Vector3(0,-gravity * Time.deltaTime,0));
+        }
+        #endregion
 
         //do aiming gun stuff
-        if (Input.GetButtonDown("Fire1")||Input.GetKeyDown(KeyCode.R))
+        if (Input.GetButton("Fire1") && !_onCoolDown && _chargeLevel<=0)
         {
             _aiming = true;
             _chargeLevel = 1;
@@ -74,38 +95,50 @@ public class PlayerMovement : MonoBehaviour
             sfxHandler.ChargeGun(); // Starts gun charge audio clip
 
         }
-        if (Input.GetButtonUp("Fire1")||Input.GetKeyUp(KeyCode.R))
+        else if (!Input.GetButton("Fire1") && _aiming)
         {
             _aiming = false;
             //firing the shot code to go here
             StopCoroutine(_chargingCoroutine);
+            if (_chargeLevel > 0)
+            {
+                GetComponentInChildren<GunShoot>().SingleChargeShot(); //jank placeholder shooting
+                _onCoolDown = true;
+                StartCoroutine(ShotCooldown());
+            }
+            else
+            {
+                GetComponentInChildren<RedHollowControl>().Play_Idle(); //stop the beam visual
+            }
             _chargeLevel = 0;
-            GetComponentInChildren<RedHollowControl>().Dead(); //end the beam visual
-            GetComponentInChildren<GunShoot>().SingleChargeShot(); //jank placeholder shooting
             
             sfxHandler.UnchargeGun(); // Stops gun Charge Audio Clip
             
         }
 
-        //check to stop it from resetting rotation when not moving
-        if(_direction.magnitude>0.4f)
-        {
-            //rotate the character to face movement direction
-            transform.rotation = Quaternion.LookRotation(_direction);
-        }
 
         //setting anim parameters
         _anim.SetBool("isAiming", _aiming);
-        _anim.SetFloat("moveSpeed", _charC.velocity.magnitude);
     }
     IEnumerator ChargingShot()
     {
         while (_aiming)
         {
             yield return new WaitForSeconds(chargeTime);
-            if (_chargeLevel < 3) _chargeLevel++;
-            else GetComponentInChildren<RedHollowControl>().Finish_Charging(); //final charge stage visual
+            if (_chargeLevel < 3)
+            {
+                _chargeLevel++;
+            }
+            else
+            {
+                GetComponentInChildren<RedHollowControl>().Finish_Charging(); //final charge stage visual
+            }
         }
+    }
+    IEnumerator ShotCooldown()
+    {
+        yield return new WaitForSeconds(coolDown);
+        _onCoolDown = false;
     }
 
 
