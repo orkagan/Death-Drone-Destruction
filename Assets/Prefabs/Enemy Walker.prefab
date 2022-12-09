@@ -1165,6 +1165,7 @@ MonoBehaviour:
   _playerlocation: {fileID: 0}
   _speed: 4
   _closeToPlayer: 0
+  explosionPrefab: {fileID: 12689342907065434, guid: 0d756e3d24aa61c40a5726688320fd9f, type: 3}
 --- !u!54 &-188909618314253287
 Rigidbody:
   m_ObjectHideFlags: 0

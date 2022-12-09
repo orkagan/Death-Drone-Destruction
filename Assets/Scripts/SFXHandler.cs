@@ -30,7 +30,9 @@ public class SFXHandler : MonoBehaviour
         Debug.Log("Uncharge");
         //GameObject.Find("One shot audio").GetComponent<AudioSource>().Stop();
         //finds all game objects with AudioSource and if the sound used is gunCharge then stop them
-        foreach (AudioSource audioSrc in GameObject.FindObjectsOfType<AudioSource>())
+        AudioSource[] audioSources = GameObject.FindObjectsOfType<AudioSource>();
+        if (audioSources.Length==0) return; //if no audio sources found, exit function by returning
+        foreach (AudioSource audioSrc in audioSources)
         {
             if (audioSrc.clip.name == gunCharge.name)
             {

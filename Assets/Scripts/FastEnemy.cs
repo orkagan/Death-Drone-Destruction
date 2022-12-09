@@ -7,6 +7,7 @@ public class FastEnemy : MonoBehaviour
     [SerializeField] Transform _playerlocation;
     [SerializeField] float _speed;
     [SerializeField] float _closeToPlayer;
+    public GameObject explosionPrefab;
     float _dist;
     int mobValue = 20;
 
@@ -42,6 +43,10 @@ public class FastEnemy : MonoBehaviour
     {
         EnemySpawner.Instance._enemyCount--;
         HighScoreData.Instance.score += mobValue;
+
+        //instantiate explosion that destroys itself after a delay
+        GameObject explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
+        Destroy(explosion, 2);
     }
 
     private void OnTriggerEnter(Collider other)

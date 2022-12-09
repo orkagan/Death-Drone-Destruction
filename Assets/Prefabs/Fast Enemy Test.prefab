@@ -132,6 +132,7 @@ MonoBehaviour:
   _playerlocation: {fileID: 0}
   _speed: 100
   _closeToPlayer: 0.5
+  explosionPrefab: {fileID: 12689342907065434, guid: 0d756e3d24aa61c40a5726688320fd9f, type: 3}
 --- !u!136 &8765922252895022056
 CapsuleCollider:
   m_ObjectHideFlags: 0
