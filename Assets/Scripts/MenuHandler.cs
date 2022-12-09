@@ -6,14 +6,27 @@ using UnityEngine.EventSystems;
 
 public class MenuHandler : MonoBehaviour
 {
-    public GameObject startButton;
+    public GameObject buttons;
+    public GameObject closeButton;
+    public GameObject ControlsPanel;
     private void Start()
     {
-        EventSystem.current.SetSelectedGameObject(startButton);
+        EventSystem.current.SetSelectedGameObject(buttons.transform.GetChild(0).gameObject);
+        ControlsPanel.SetActive(false);
     }
     public void ChangeScene(int index)
     {
         SceneManager.LoadScene(index);
+    }
+    public void OpenControls()
+    {
+        ControlsPanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(closeButton);
+    }
+    public void CloseControls()
+    {
+        ControlsPanel.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(buttons.transform.GetChild(1).gameObject);
     }
     public void ExitGame()
     {
